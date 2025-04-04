@@ -20,7 +20,14 @@ def dashboard_header():
 def registration_page():
     st.header("Register as a New User")
     
-    user_id = st.number_input("User ID", min_value=1, step=1)
+    #user_id = st.number_input("User ID", min_value=1, step=1)
+    user_id_input = st.text_input("User ID")
+
+    if user_id_input.isdigit():
+        user_id = int(user_id_input)
+    else:
+        user_id = None  # or show warning if needed
+
     user_name = st.text_input("Username")
     role = st.radio("Role", ["Employee", "Employer"])
     
@@ -28,7 +35,7 @@ def registration_page():
     
     with col1:
         if st.button("Register"):
-            if user_id and user_name and role:
+            if user_id is not None and user_name and role:
                 user_data = {"id": user_id, "userName": user_name, "role": role}
                 response = requests.post(f"{BASE_URL}/register", json=user_data)
                 
@@ -81,6 +88,7 @@ def login_page():
                         st.session_state.user_id = user_id
                         st.success("Login Successful")
                         st.session_state.first_run = False
+                        st.rerun()
                     else:
                         st.error("Invalid Credentials. Please try again.")
                 else:
