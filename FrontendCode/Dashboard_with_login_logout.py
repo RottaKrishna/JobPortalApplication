@@ -253,17 +253,38 @@ def employer_dashboard():
                         applicant_count = applicant_response.text.strip()
                     else:
                         applicant_count = "N/A"
+                    col1, col2 = st.columns([6, 3])
+                    with col1:
 
-                    st.markdown(f"""
-                            <div style="border: 1px solid #ddd; padding: 16px; margin: 8px; border-radius: 8px; background-color: #f1f1f1;">
-                                <h4 style="color: #333;">{job["postProfile"]} (ID: {job["postId"]})</h4>
-                                <p style="color: #555;">{job["postDesc"]}</p>
-                                <p style="color: #555;"><b>Experience Required:</b> {job["reqExperience"]} years</p>
-                                <p style="color: #555;"><b>Tech Stack:</b> {", ".join(job["postTechStack"])}</p>
-                                <p style="color: #555;"><b>Employer ID:</b> {job["employerId"]}</p>
-                                <p style="color: #555;"><b>Applicants:</b> {applicant_count}</p>
-                            </div>
-                        """, unsafe_allow_html=True)
+                        st.markdown(f"""
+                                <div style="border: 1px solid #ddd; padding: 16px; margin: 8px; border-radius: 8px; background-color: #f1f1f1;">
+                                    <h4 style="color: #333;">{job["postProfile"]} (ID: {job["postId"]})</h4>
+                                    <p style="color: #555;">{job["postDesc"]}</p>
+                                    <p style="color: #555;"><b>Experience Required:</b> {job["reqExperience"]} years</p>
+                                    <p style="color: #555;"><b>Tech Stack:</b> {", ".join(job["postTechStack"])}</p>
+                                    <p style="color: #555;"><b>Employer ID:</b> {job["employerId"]}</p>
+                                    <p style="color: #555;"><b>Applicants:</b> {applicant_count}</p>
+                                </div>
+                            """, unsafe_allow_html=True)
+                    with col2:
+                        if st.button(f"View Applicants", key=f"view_{job_id}"):
+                            # Fetch applicants for the selected job
+                            applicants_response = requests.get(f"{BASE_URL}/applicants/{job_id}")
+                            
+                            if applicants_response.status_code == 200:
+                                applicants = applicants_response.json()
+                                if applicants:
+                                    st.subheader(f"Applicants for {job['postProfile']} (ID: {job_id})")
+                                    for applicant in applicants:
+                                        st.markdown(f"""
+                                            <div style="border: 1px solid #ddd; padding: 10px; margin: 5px; border-radius: 8px; background-color: #eaf2ff;">
+                                                <p style="color: #555;"><b>Applicant ID:</b> {applicant["applicationId"]}</p>
+                                                <p style="color: #555;"><b>UserId:</b> {applicant["userId"]}</p>
+                                                <p style="color: #555;"><b>Current Company:</b> {applicant["currentCompany"]}</p>
+                                                <p style="color: #555;"><b>Experience:</b> {applicant["currentExp"]} years</p>
+                                            </div>
+                                        """, unsafe_allow_html=True)
+                    
             else:
                 st.warning("No jobs posted")
         else:

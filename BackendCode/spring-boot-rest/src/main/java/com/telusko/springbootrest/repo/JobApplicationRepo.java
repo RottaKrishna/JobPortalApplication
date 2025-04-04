@@ -16,5 +16,7 @@ public interface JobApplicationRepo extends JpaRepository<JobApplication, Long> 
     List<JobPost> findJobsAppliedByEmployee(@Param("userId") int userId);
     @Query("SELECT COUNT(a) FROM JobApplication a WHERE a.jobId = :jobId")
     int countApplicantsForJob(@Param("jobId") int jobId);
+    @Query("SELECT ja FROM JobApplication ja WHERE ja.jobId=:jobId")
+    List<JobApplication> findJobsAppliedByJobId(@Param("jobId") int jobId);
 }
 

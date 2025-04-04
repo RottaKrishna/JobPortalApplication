@@ -165,6 +165,12 @@ public class JobRestController {
 	return jobs;}
 	}
 
+	@GetMapping("/applicants/{jobId}")
+	public List<JobApplication> getApplicantDetails(@PathVariable int jobId){
+		List<JobApplication> jobs = jobApplicationService.getJobsApplicants(jobId);{
+			return jobs;}
+	}
+
 
 
 

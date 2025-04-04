@@ -50,6 +50,10 @@ public class JobApplicationService {
         return jobApplicationRepository.countApplicantsForJob(jobId);
     }
 
+    public List<JobApplication> getJobsApplicants(int jobId) {
+        return jobApplicationRepository.findJobsAppliedByJobId(jobId);
+    }
+
 
     // Method to fetch job applications by user
 
