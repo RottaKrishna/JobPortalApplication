@@ -19,58 +19,82 @@ def dashboard_header():
 
 def registration_page():
     st.header("Register as a New User")
+    
     user_id = st.number_input("User ID", min_value=1, step=1)
     user_name = st.text_input("Username")
     role = st.radio("Role", ["Employee", "Employer"])
     
-    if st.button("Register"):
-        if user_id and user_name and role:
-            user_data = {"id": user_id, "userName": user_name, "role": role}
-            response = requests.post(f"{BASE_URL}/register", json=user_data)
-            
-            if response.status_code == 200:
-                st.success("User registered successfully! You can now log in.")
-
+    col1, col2 = st.columns([1, 1])
+    
+    with col1:
+        if st.button("Register"):
+            if user_id and user_name and role:
+                user_data = {"id": user_id, "userName": user_name, "role": role}
+                response = requests.post(f"{BASE_URL}/register", json=user_data)
+                
+                if response.status_code == 200:
+                    st.success("User registered successfully! You can now log in.")
+                else:
+                    st.error("Failed to register user. Try again.")
             else:
-                st.error("Failed to register user. Try again.")
-        else:
-            st.warning("Please fill in all fields.")
+                st.warning("Please fill in all fields.")
+    
+    with col2:
+        if st.button("Back to Login"):
+            st.session_state.show_register = False
+            st.rerun()
+
 
 
 # Login Page
 def login_page():
+    st.markdown("<h2 style='text-align: center;'>Welcome to the Job Portal</h2>", unsafe_allow_html=True)
     
-    st.header("Welcome to the Job Portal")
-    col1, col2 = st.columns([3,1])
-    # Inputs for user credentials
-    with col1:
-        user_name = st.text_input("Username")
-        user_id = st.number_input("ID", min_value=1, step=1)
-        role = st.radio("Role", ["Employee", "Employer"])
+    # Create some spacing
+    st.write("")
+    st.write("")
 
-        if st.button("Login"):
-            if user_name and user_id and role:
-                login_data={"userName":user_name,
-                            "id":str(user_id),
-                            "role":role}
-                responce = requests.post(f"{BASE_URL}/login",json=login_data)
-                if responce.status_code == 200:
-                    st.session_state.logged_in = True
-                    st.session_state.user_name = user_name
-                    st.session_state.user_role = role
-                    st.session_state.user_id = user_id
-                    st.success("Login Successful")
-                    st.session_state.first_run=False
+    # Center the login form using columns
+    col1, col2, col3 = st.columns([1, 2, 1])
+
+    with col2:
+        with st.form("login_form"):
+            st.subheader("Login")
+            user_name = st.text_input("Username")
+            user_id = st.number_input("ID", min_value=1, step=1)
+            role = st.radio("Role", ["Employee", "Employer"], horizontal=True)
+
+            login_btn = st.form_submit_button("Login")
+
+            if login_btn:
+                if user_name and user_id and role:
+                    login_data = {
+                        "userName": user_name,
+                        "id": str(user_id),
+                        "role": role
+                    }
+                    response = requests.post(f"{BASE_URL}/login", json=login_data)
+                    if response.status_code == 200:
+                        st.session_state.logged_in = True
+                        st.session_state.user_name = user_name
+                        st.session_state.user_role = role
+                        st.session_state.user_id = user_id
+                        st.success("Login Successful")
+                        st.session_state.first_run = False
+                    else:
+                        st.error("Invalid Credentials. Please try again.")
                 else:
-                    st.error("Invalid Credentials. Please try again.")
-            else:
-                st.warning("Please fill in all fields.")
-        with col2:
-            st.subheader("New User?")
-            if st.button("Register Here"):
-                st.session_state.show_registration = True
-                st.rerun()
-        
+                    st.warning("Please fill in all fields.")
+
+    # New User? Register Here Section
+    st.markdown("---")
+    st.markdown("<div style='text-align: center;'>New user?</div>", unsafe_allow_html=True)
+    register_col = st.columns([6, 3, 6])[1]
+    with register_col:
+        if st.button("Register Here"):
+            st.session_state.show_register = True
+            st.rerun()
+
 
 
 
