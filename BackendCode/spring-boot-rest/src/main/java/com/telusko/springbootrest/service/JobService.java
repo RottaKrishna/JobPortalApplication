@@ -111,11 +111,19 @@ public void load() {
     // arrayList to store store JobPost objects
     List<JobPost> jobs =
             new ArrayList<>(List.of(
-                    new JobPost(1, "Software Engineer", "Exciting opportunity for a skilled software engineer.", 3, List.of("Java", "Spring", "SQL","API"),103),
-                    new JobPost(2, "Data Scientist", "Join our data science team and work on cutting-edge projects.", 5, List.of("Python", "Machine Learning", "TensorFlow","API"),104),
-                    new JobPost(3, "Frontend Developer", "Create API amazing user interfaces with our talented frontend team.", 2, List.of("JavaScript", "React", "CSS","API"),103),
-                    new JobPost(4, "Network Engineer", "Design and API maintain our robust network infrastructure.", 4, List.of("Cisco", "Routing", "Firewalls"),104),
-                    new JobPost(5, "UX Designer", "Shape the user experience with your creative design skills.", 3, List.of("UI/UX Design", "Adobe XD", "Prototyping"),103)
+                    new JobPost(1, "Product Manager", "Seeking an experienced product manager for a tech firm.", 5, List.of("Agile", "Scrum", "Stakeholder Management", "Product Strategy"), 106),
+
+                    new JobPost(2, "Data Analyst", "Seeking a data analyst with expertise in SQL and Python.", 2, List.of("SQL", "Python", "Tableau", "Data Visualization"), 107),
+                    new JobPost(3, "Frontend Developer", "Looking for a creative frontend developer skilled in React.", 3, List.of("React", "JavaScript", "CSS", "HTML"), 108),
+                    new JobPost(4, "DevOps Engineer", "Hiring a DevOps engineer to manage CI/CD pipelines.", 4, List.of("AWS", "Docker", "Kubernetes", "Jenkins"), 109),
+                    new JobPost(5, "Machine Learning Engineer", "Exciting opportunity in AI and ML development.", 5, List.of("Python", "TensorFlow", "PyTorch", "NLP"), 110),
+                    new JobPost(6, "Cybersecurity Analyst", "Looking for an expert in cybersecurity and threat analysis.", 3, List.of("Network Security", "Penetration Testing", "SIEM", "Firewall Management"), 106),
+                    new JobPost(7, "Full Stack Developer", "Seeking a full stack developer for web applications.", 4, List.of("Node.js", "React", "MongoDB", "Express.js"), 107),
+                    new JobPost(8, "Cloud Engineer", "Hiring a cloud engineer with expertise in AWS and Azure.", 4, List.of("AWS", "Azure", "Terraform", "Cloud Security"), 108),
+                    new JobPost(9, "QA Engineer", "Looking for a QA engineer to enhance testing processes.", 2, List.of("Selenium", "TestNG", "Manual Testing", "Automation Testing"), 109),
+                    new JobPost(10, "Backend Developer", "Exciting opportunity to build robust backend applications.", 4, List.of("Java", "Spring Boot", "PostgreSQL", "Microservices"), 110)
+
+
 
             ));
 

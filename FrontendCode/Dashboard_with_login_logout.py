@@ -177,18 +177,23 @@ def employee_dashboard():
             jobs = jobs_response.json()
             job_options = {job["postId"]: job["postProfile"] for job in jobs}
             selected_job_id = st.selectbox("Select Job ID to Apply", options=job_options.keys(), format_func=lambda x: f"{x} - {job_options[x]}")
-            employee_id=st.number_input("Employee ID", min_value=1, step = 1)
-            application_id=st.number_input("Application ID", min_value=1, step=1)
+            employee_id=st.session_state.user_id
+            current_company = st.text_input("Current Company")
+            experience = st.number_input("Years of Experience",min_value=0,step=1)
+            
             # Inputs for job application
             
 
             if st.button("Apply"):
+                if not current_company or experience is None:
+                    st.warning("Please fill in all fields")
                 # Create application data based on employee ID, selected job ID, and status
                 application_data = {
-                    "applicationId":application_id,
+                    
                     "userId": employee_id,  # Using the employee ID stored in session state
                     "jobId": selected_job_id,
-                    "status": "Pending",  # Status is set to "Pending"
+                    "currentCompany":current_company,
+                    "currentExp":experience  # Status is set to "Pending"
                     
                 }
 

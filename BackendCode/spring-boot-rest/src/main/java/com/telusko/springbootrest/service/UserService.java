@@ -21,9 +21,15 @@ public class UserService {
     public void store() {
         List<User> users = List.of(
                 new User("krishna", 101, "Employee"),
-                new User("vamsi", 102, "Employee"),
-                new User("venu", 103, "Employer"),
-                new User("kishn", 104, "Employer")
+                new User("Ajay", 102, "Employee"),
+                new User("Vikas", 103, "Employee"),
+                new User("Sai", 104, "Employee"),
+                new User("Praband", 105, "Employee"),
+                new User("Vamsi", 106, "Employee"),
+                new User("Pavan", 107, "Employer"),
+                new User("Venkatesh", 108, "Employer"),
+                new User("Rakesh", 109, "Employer"),
+                new User("Shiva", 110, "Employer")
         );
 
         userRepository.saveAll(users);

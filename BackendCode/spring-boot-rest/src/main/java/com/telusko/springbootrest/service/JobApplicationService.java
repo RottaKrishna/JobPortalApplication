@@ -17,23 +17,17 @@ public class JobApplicationService {
     @Autowired
     private JobApplicationRepo jobApplicationRepository;
 
-    public JobApplication applyForJob(int applicationId, int userId, int jobId) {
-        JobApplication jobApplication = new JobApplication();
-        jobApplication.setApplicationId(applicationId);
-        jobApplication.setUserId(userId);
-        jobApplication.setJobId(jobId);
-        jobApplication.setStatus("Pending"); // Default status when applying
 
-        return jobApplicationRepository.save(jobApplication);
-    }
 
     public void store() {
         List<JobApplication> applications = List.of(
-                new JobApplication(200,101,1,"pending"),
-                new JobApplication(201,102,2,"pending"),
+                new JobApplication(200,101,1,"Google",2),
+                new JobApplication(201,102,2,"Apple",3),
 
-                new JobApplication(202,101,3,"pending"),
-                new JobApplication(203,102,4,"pending")
+                new JobApplication(203,103,3,"Microsoft",4),
+                new JobApplication(204,104,4,"Yahoo",2),
+                new JobApplication(205,105,5,"Ola",3),
+                new JobApplication(206,106,6,"Uber",2)
         );
 
        jobApplicationRepository.saveAll(applications);
