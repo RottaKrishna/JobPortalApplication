@@ -14,5 +14,7 @@ import java.util.List;
 public interface JobApplicationRepo extends JpaRepository<JobApplication, Long> {
     @Query("SELECT jp FROM JobApplication ja JOIN JobPost jp ON ja.jobId=jp.postId WHERE ja.userId=:userId")
     List<JobPost> findJobsAppliedByEmployee(@Param("userId") int userId);
+    @Query("SELECT COUNT(a) FROM JobApplication a WHERE a.jobId = :jobId")
+    int countApplicantsForJob(@Param("jobId") int jobId);
 }
 

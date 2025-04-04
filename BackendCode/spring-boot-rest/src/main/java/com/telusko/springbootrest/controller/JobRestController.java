@@ -175,6 +175,12 @@ public class JobRestController {
 		return message;
 	}
 
+	@GetMapping("/count/{postId}")
+	public ResponseEntity<?> getApplicantsCount(@PathVariable int postId) {
+		int count = jobApplicationService.getApplicantsCount(postId);
+		return ResponseEntity.ok(count);
+	}
+
 
 
 

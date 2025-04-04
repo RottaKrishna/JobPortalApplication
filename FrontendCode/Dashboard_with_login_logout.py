@@ -247,6 +247,13 @@ def employer_dashboard():
             posted_jobs = response.json()
             if posted_jobs:
                 for job in posted_jobs:
+                    job_id = job["postId"]
+                    applicant_response = requests.get(f"{BASE_URL}/count/{job_id}")
+                    if applicant_response.status_code == 200:
+                        applicant_count = applicant_response.text.strip()
+                    else:
+                        applicant_count = "N/A"
+
                     st.markdown(f"""
                             <div style="border: 1px solid #ddd; padding: 16px; margin: 8px; border-radius: 8px; background-color: #f1f1f1;">
                                 <h4 style="color: #333;">{job["postProfile"]} (ID: {job["postId"]})</h4>
@@ -254,6 +261,7 @@ def employer_dashboard():
                                 <p style="color: #555;"><b>Experience Required:</b> {job["reqExperience"]} years</p>
                                 <p style="color: #555;"><b>Tech Stack:</b> {", ".join(job["postTechStack"])}</p>
                                 <p style="color: #555;"><b>Employer ID:</b> {job["employerId"]}</p>
+                                <p style="color: #555;"><b>Applicants:</b> {applicant_count}</p>
                             </div>
                         """, unsafe_allow_html=True)
             else:
