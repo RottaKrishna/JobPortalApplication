@@ -30,7 +30,7 @@ public class JobRestController {
 	
 	
 	
-
+	
 	@GetMapping("jobPosts")
 	public List<JobPost> getAllJobs() {
 		return service.getAllJobs();

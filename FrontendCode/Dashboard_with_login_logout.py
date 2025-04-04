@@ -127,7 +127,8 @@ def employee_dashboard():
         if response.status_code == 200:
             jobs = response.json()
             if jobs:
-                for i, job in enumerate(jobs):
+                jobs_sorted = sorted(jobs, key=lambda x: x["postId"])
+                for i, job in enumerate(jobs_sorted):
                     with cols[i % 2]:  # Alternate between the two columns
                         st.markdown(f"""
                             <div style="border: 1px solid #ddd; padding: 16px; margin: 8px; border-radius: 8px; background-color: #f1f1f1;">
@@ -298,7 +299,7 @@ def employer_dashboard():
     with tab2:
         st.subheader("Add a New Job")
         post_id = st.number_input("Job ID", min_value=1, step=1)
-        employer_id = st.number_input("Employer ID", min_value=1, step=1)
+        employer_id = st.session_state.user_id
         post_profile = st.text_input("Job Role")
         post_desc = st.text_area("Job Description")
         req_experience = st.number_input("Required Experience (Years)", min_value=0, step=1)
@@ -336,7 +337,7 @@ def employer_dashboard():
             job_data = next((job for job in jobs if job["postId"] == selected_job_id), None)
 
             if job_data:
-                employer_id = st.number_input("Employer ID", min_value=1, step=1, value=job_data["employerId"])
+                employer_id = st.session_state.user_id
                 new_profile = st.text_input("Job Role", value=job_data["postProfile"])
                 new_desc = st.text_area("Job Description", value=job_data["postDesc"])
                 new_experience = st.number_input("Required Experience (Years)", min_value=0, step=1, value=job_data["reqExperience"])
