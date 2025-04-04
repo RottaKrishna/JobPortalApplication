@@ -141,4 +141,8 @@ public List<JobPost> viewJobsByEmployerId(int employerId) {
 
         return repo.findJobsPostedByEmployer(employerId);
 }
+
+    public List<JobPost> findJobsByEmployer(int employerId) {
+        return repo.findJobsPostedByEmployer(employerId);
+    }
 }

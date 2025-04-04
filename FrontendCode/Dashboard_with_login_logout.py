@@ -257,9 +257,10 @@ def employer_dashboard():
     # Update Job
     with tab3:
         st.subheader("Update an Existing Job")
+        employerId = st.session_state.user_id
 
         # Fetch jobs for selection
-        jobs_response = requests.get(f"{BASE_URL}/jobPosts")
+        jobs_response = requests.get(f"{BASE_URL}/jobPosts/employer/{employerId}")
         if jobs_response.status_code == 200 and jobs_response.json():
             jobs = jobs_response.json()
             job_options = {job["postId"]: job["postProfile"] for job in jobs}
@@ -284,7 +285,7 @@ def employer_dashboard():
                         "reqExperience": new_experience,
                         "postTechStack": new_skills.split(",")
                     }
-                    update_response = requests.put(f"{BASE_URL}/jobPost", json=updated_job)
+                    update_response = requests.put(f"{BASE_URL}/jobPost/{post_id}", json=updated_job)
 
                     if update_response.status_code == 200:
                         st.success("Job updated successfully!")
@@ -297,16 +298,18 @@ def employer_dashboard():
     # Delete Job
     with tab4:
         st.subheader("Delete a Job")
-
+        employerId = st.session_state.user_id
         # Fetch jobs for selection
-        jobs_response = requests.get(f"{BASE_URL}/jobPosts")
+        jobs_response = requests.get(f"{BASE_URL}/jobPosts/employer/{employerId}")
+
         if jobs_response.status_code == 200 and jobs_response.json():
             jobs = jobs_response.json()
             job_options = {job["postId"]: job["postProfile"] for job in jobs}
             selected_job_id = st.selectbox("Select Job ID to Delete", options=job_options.keys(), format_func=lambda x: f"{x} - {job_options[x]}")
 
             if st.button("Delete Job"):
-                delete_response = requests.delete(f"{BASE_URL}/jobPost/{selected_job_id}")
+                delete_response = requests.delete(f"{BASE_URL}/jobPost/{selected_job_id}?employerId={employerId}")
+
 
                 if delete_response.status_code == 200:
                     st.success("Job deleted successfully!")

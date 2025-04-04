@@ -103,6 +103,13 @@ public class JobRestController {
 
 	}
 
+	@GetMapping("/jobPosts/employer/{employerId}")
+	public List<JobPost> getJobsByEmployer(@PathVariable int employerId) {
+		//return jobRepo.findJobsPostedByEmployer(employerId);
+		return service.findJobsByEmployer(employerId);
+	}
+
+
 	@GetMapping("users")
 	public List<User> getAllUsers() {
 		return uservice.getAllUsers();
